@@ -10,3 +10,28 @@
   分页的做法也不太赞成，用户刷新页面的情况你有考虑？
   axios中使用了store.dispatch(action)，而updateLoadingStatus看起来并不是一个异步方法，不合规范，应该用store.commit（mutation）
   怎么会在resize事件中判断平台呢？直接新增一个getters不就行了吗？
+3.vue跨域问题
+  假如只是开发环境可以使用proxy做代理
+    dev: {
+      env: require('./dev.env'),
+      port: 8080,  //设置访问的端口号
+      autoOpenBrowser: true,
+      assetsSubDirectory: 'static',
+      assetsPublicPath: '/',
+      proxyTable: {
+          '/api': {
+              target: 'http://10.10:8063', //设置调用接口域名和端口号别忘了加http
+              changeOrigin: true,
+              pathRewrite: {
+                  '^/api': '/' //这里理解成用‘/api’代替target里面的地址，组件中我们调接口时直接用api代替
+                      // 比如我要调用'http://0.0:300/user/add'，直接写‘/api/user/add’即可
+              }
+          }
+      }
+    整个项目跨域
+      服务端我已经做了http头报文header中的跨域处理
+        Access-Control-Allow-Origin: * 
+        "Access-Control-Allow-Headers":"Authorization,Origin, X-Requested-With, Content-Type, Accept"
+      客户端
+        http请求报文的头部设置编码格式Content-Type为application/x-www-form-urlencoded
+        post时的参数需要：qs.stringify(params)
