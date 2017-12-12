@@ -1,0 +1,12 @@
+1.需要登录的网站，按刷新后一般会进行什么操作保存登录状态？
+
+基本思路都是设置自身的 cookie 来, 再次向服务端提交已经鉴权过的身份信息
+  设置cookie
+  保存session
+  使用 JSON Web Token 提升安全性
+2.vue里面的问题
+  title一般在afterEach钩子里面修改，因为beforeEach里通常作权限，登录等验证跳转
+  axios的拦截器里不适合作跳转，因为会有未登录就进行跳转的情况（跳转前未完成请求）， 是否登录通常在beforeEach里判断，就不会有上述问题
+  分页的做法也不太赞成，用户刷新页面的情况你有考虑？
+  axios中使用了store.dispatch(action)，而updateLoadingStatus看起来并不是一个异步方法，不合规范，应该用store.commit（mutation）
+  怎么会在resize事件中判断平台呢？直接新增一个getters不就行了吗？
