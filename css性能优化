@@ -1,0 +1,27 @@
+1. inline-block的边距
+  删除代码之前的空行空格，带display:inline-block的元素之前的空行都删除掉
+  父元素font-size设置为0
+2. 图片要设置width和height
+  1.PC站，建议在img标签的属性设置width和height。这样避免加载不出css而错位
+  2.手机站，建议用css设置img的width和height，因为手机站要做适配，在属性设置width和height不灵活，
+    比如使用rem布局，在属性那里设置不了width和height。
+  3.如果图片不固定，但是有一个max-width和max-height，那么建议在img的父元素设置width和height。
+    img根据父元素的width和height设置max-width和max-height
+3.公共样式
+  /*超出省略号*/
+  /*<p class='text-ellipsis'></p>*/
+  .text-ellipsis{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  /*清除浮动*/
+  /*<div class='clearfix'></div>*/
+  .clearfix:after {
+      display: block;
+      content: '';
+      clear: both;
+      height:0;
+  }
+  4.解决由于缩小页面窗口出现的顶部的图片和背景有一部分是断层
+    给body加上min-width。让body的宽度最小不会小于内容的宽度！
